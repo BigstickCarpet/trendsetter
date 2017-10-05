@@ -1,27 +1,27 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var ono = require('ono');
-var util = require('./util');
+let express = require('express');
+let bodyParser = require('body-parser');
+let ono = require('ono');
+let util = require('./util');
 
-var trends = [];
-var api = module.exports = express.Router();
+let trends = [];
+let api = module.exports = express.Router();
 
 
 // Parse HTTP request bodies
 api.use(bodyParser.urlencoded({ extended: false }));
-api.use(bodyParser.json({type: function(req) {
+api.use(bodyParser.json({ type (req) {
   return /json|text|undefined/.test(req.headers['content-type']);
-}}));
+} }));
 
 
 // GET /trends
-api.get('/trends', function(req, res, next) {
+api.get('/trends', (req, res, next) => {
   res.json(util.sort(trends));
 });
 
 
 // DELETE /trends
-api.delete('/trends', function(req, res, next) {
+api.delete('/trends', (req, res, next) => {
   // Reset all data
   trends = [];
   res.status(204).send();
@@ -29,15 +29,15 @@ api.delete('/trends', function(req, res, next) {
 
 
 // POST /trends
-api.post('/trends', function(req, res, next) {
+api.post('/trends', (req, res, next) => {
   // Validate the Trend
-  var trend = util.validate(req.body);
+  let trend = util.validate(req.body);
 
   // Get any existing date ranges for this trend
-  var existing = trends.filter(util.byName(trend.name));
+  let existing = trends.filter(util.byName(trend.name));
 
   // Has this trend been popular too recently?
-  var conflicts = existing.filter(util.between(trend.from - 10, trend.to + 10));
+  let conflicts = existing.filter(util.between(trend.from - 10, trend.to + 10));
 
   if (conflicts.length === 0) {
     // Success! Add the new trend
@@ -49,7 +49,7 @@ api.post('/trends', function(req, res, next) {
   }
   else {
     // Conflict!
-    var conflict = conflicts[0];
+    let conflict = conflicts[0];
     throw ono({ status: 409 }, '%s can\'t be trendy again so soon. It was already trendy from %d to %d',
       trend.name, conflict.from, conflict.to);
   }
@@ -57,24 +57,24 @@ api.post('/trends', function(req, res, next) {
 
 
 // GET /trends/{filter}
-api.get('/trends/:filter', function(req, res, next) {
-  var filteredTrends = trends.filter(util.byNameOrYear(req.params.filter));
+api.get('/trends/:filter', (req, res, next) => {
+  let filteredTrends = trends.filter(util.byNameOrYear(req.params.filter));
   if (filteredTrends.length > 0) {
     // Success! Return the trends
     res.json(util.sort(filteredTrends));
   }
   else {
     // No trends were found :(
-    var year = parseInt(req.params.filter);
+    let year = parseInt(req.params.filter);
     throw ono({ status: 404 }, req.params.filter, year ? 'isn\'t a trendy year' : 'aren\'t trendy');
   }
 });
 
 
 // DELETE /trends/{name}
-api.delete('/trends/:name', function(req, res, next) {
-  var existing = trends.filter(util.byName(req.params.name));
-  existing.forEach(function(trend) {
+api.delete('/trends/:name', (req, res, next) => {
+  let existing = trends.filter(util.byName(req.params.name));
+  existing.forEach((trend) => {
     trends.splice(trends.indexOf(trend), 1);
   });
   res.status(204).send();
