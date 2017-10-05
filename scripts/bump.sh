@@ -41,10 +41,10 @@ json="$(
 version="$(node -p "(${json}).Version")"
 
 echo Bumping the version number in package.json...
-npm version ${version}.0.0
+version="$(npm version ${version}.0.0)"
 
-echo Pushing the new version to Git...
-git push
-git push --tags
+echo Pushing v${version} to Git...
+git push --quiet
+git push --tags --quiet
 
 echo Done!
