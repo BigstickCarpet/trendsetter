@@ -4,7 +4,7 @@ const Response = require('./Response');
 const { findHeader } = require('./util');
 const serializeError = require('serialize-error');
 
-module.exports = {
+let log = module.exports = {
   /**
    * Logs the incoming HTTP request
    *
@@ -14,7 +14,7 @@ module.exports = {
    */
   request (request, context) {
     let entry = createLogEntry(request, context);
-    console.log(entry);
+    log.write('info', entry);
     return request;
   },
 
@@ -33,13 +33,13 @@ module.exports = {
     entry = Object.assign({ status: response.statusCode }, entry);
 
     if (response.statusCode < 400) {
-      console.log(entry);
+      log.write('info', entry);
     }
     else {
       // Extract the error code from the response body
       let match = /"error":"(.*?)"/.exec(response.body);
       entry.error = match && match[1];
-      console.warn(entry);
+      log.write('warn', entry);
     }
 
     return response;
@@ -60,11 +60,23 @@ module.exports = {
     else {
       let errorPojo = serializeError(error);
       let entry = createLogEntry(request, context);
-      console.error(Object.assign(entry, errorPojo));
+      log.write('error', Object.assign(entry, errorPojo));
 
       return Response.error(error);
     }
   },
+
+  /**
+   * Writes the given data to the console, except in test mode.
+   *
+   * @param {string} level - The log level (e.g. "info", "error", "warn")
+   * @param {object} data - The JSON data to log
+   */
+  write (level, data) {
+    if (process.env.NODE_ENV !== 'test') {
+      console[level](data);
+    }
+  }
 };
 
 /**
@@ -78,7 +90,7 @@ function createLogEntry (request, context) {
   return {
     method: request.httpMethod,
     path: request.path,
-    tenant: findHeader(request.headers, 'X-API-Key'),
+    user: findHeader(request.headers, 'X-API-Key'),
     functionVersion: context.functionVersion,
     requestId: context.awsRequestId || context.invokeid,
   };
