@@ -27,7 +27,7 @@
     "test": "mocha",
     "cover": "istanbul cover _mocha",
     "upgrade": "npm-check -u",
-    "setup": "scripts/setup.sh",
+    "package": "scripts/package.sh",
     "start": "scripts/start.sh",
     "bump": "scripts/bump.sh",
     "release": "scripts/release.sh"
@@ -41,11 +41,13 @@
     "express": "^4.16.1",
     "istanbul": "^0.4.5",
     "mocha": "^4.0.0",
-    "npm-check": "^5.4.5",
-    "version-bump-prompt": "^3.1.2"
+    "npm-check": "^5.4.5"
   },
   "dependencies": {
     "aws-sdk": "^2.126.0",
     "uuid": "^3.1.0"
-  }
+  },
+  "bundledDependencies": [
+    "uuid"
+  ]
 }

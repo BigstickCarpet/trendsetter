@@ -38,3 +38,6 @@ node_modules
 # Test output
 lib-cov
 /coverage
+
+# Packaged code
+/package
