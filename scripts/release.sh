@@ -12,9 +12,9 @@ echo
 echo Updating all dependencies...
 npm run upgrade --silent
 
-# echo
-# echo Running ESLint...
-# npm run lint --silent
+echo
+echo Running ESLint...
+npm run lint --silent
 
 echo
 echo Running tests...
@@ -35,8 +35,8 @@ json="$(
     --name Prod
 )"
 
-echo
-echo All Done!
+# echo
+# echo "${json}"
 
 echo
-echo "${json}"
+echo All Done!
