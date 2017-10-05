@@ -23,13 +23,16 @@ npm test --silent
 # Bump the version number in package.json, Git, and AWS Lambda
 npm run bump --silent
 
+# Get the new version number from package.json
+version=$(node -p "parseInt(require('./package.json').version)")
+
 echo
-echo Aliasing v${lambda_version} as "Prod"...
+echo Aliasing v${version} as "Prod"...
 json="$(
   aws lambda update-alias \
     --function-name TrendsetterLambda \
     --name Prod
-    --function-version ${lambda_version} \
+    --function-version ${version} \
 )"
 
 echo
