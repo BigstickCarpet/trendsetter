@@ -33,9 +33,7 @@ json="$(
 )"
 
 echo
-echo Done!
+echo All Done!
 
 echo
 echo "${json}"
-# aws lambda add-permission --function-name arn:aws:lambda:us-east-1:600218629851:function:TrendsetterLambda:Dev --source-arn 'arn:aws:execute-api:us-east-1:600218629851:w0lhb0c796/*/*/' --principal apigateway.amazonaws.com --statement-id 1a3e76c0-6e74-4eb1-864d-3d2620929f35 --action lambda:InvokeFunction
-# aws lambda add-permission --function-name arn:aws:lambda:us-east-1:600218629851:function:TrendsetterLambda:Dev --source-arn 'arn:aws:execute-api:us-east-1:600218629851:w0lhb0c796/*/*/*' --principal apigateway.amazonaws.com --statement-id 68c04ed5-e856-48d3-91d9-c326efdae490 --action lambda:InvokeFunction
