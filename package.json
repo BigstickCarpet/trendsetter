@@ -44,7 +44,7 @@
     "npm-check": "^5.4.5"
   },
   "dependencies": {
-    "aws-sdk": "^2.126.0",
+    "aws-sdk": "^2.128.0",
     "uuid": "^3.1.0"
   },
   "bundledDependencies": [
