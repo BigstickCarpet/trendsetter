@@ -5,12 +5,12 @@ const Response = require('./Response');
 
 const routes = [
   {
-    pattern: /\/trends\/?/i,
+    pattern: /^\/trends\/?$/i,
     GET: require('./handlers/findTrends'),
     POST: require('./handlers/createTrend'),
   },
   {
-    pattern: /\/trends\/.+?\/?/i,
+    pattern: /^\/trends\/.+?\/?$/i,
     PUT: require('./handlers/updateTrend'),
     DELETE: require('./handlers/deleteTrend'),
   },
