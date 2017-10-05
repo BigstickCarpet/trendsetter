@@ -56,22 +56,17 @@ class Response {
   /**
    * Creates a {@link Response} object from an {@link Error} object.
    *
-   * @param {Error|Response} error - The error, or an existing error response
+   * @param {Error} error - The error object
    * @returns {Response}
    */
   static error (error) {
-    if (error instanceof Response) {
-      return error;
-    }
-    else {
-      return new Response(
-        error.statusCode || 500,
-        {
-          error: error.code || error.name || 'SERVER_ERROR',
-          message: error.message || 'An error occurred on the server',
-        }
-      );
-    }
+    return new Response(
+      error.statusCode || 500,
+      {
+        error: error.code || error.name || 'SERVER_ERROR',
+        message: error.message || 'An error occurred on the server',
+      }
+    );
   }
 
   /**

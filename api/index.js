@@ -1,5 +1,6 @@
 'use strict';
 
+const log = require('./log');
 const Response = require('./Response');
 
 const routes = [
@@ -23,10 +24,13 @@ const routes = [
  * @param {function} callback - The callback to send the HTTP response
  */
 exports.handler = (request, context, callback) => {
-  findHandler(request)
+  Promise.resolve()
+    .then(() => log.request(request, context))
+    .then(() => findHandler(request))
     .then(handler => handler(request, context))
-    .then(response => callback(null, response))
-    .catch(error => callback(null, Response.error(error)));
+    .catch(error => log.error(error, request, context))
+    .then(response => log.response(request, response, context))
+    .then(response => callback(null, response));
 };
 
 /**
@@ -54,4 +58,3 @@ function findHandler ({ path, httpMethod }) {
     resolve(handler);
   });
 }
-
