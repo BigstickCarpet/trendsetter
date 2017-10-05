@@ -38,12 +38,12 @@ json="$(
 )"
 
 # Get the new Lambda version number
-version="$(node -p "(${json}).Version")"
+lambda_version="$(node -p "(${json}).Version")"
 
 echo Bumping the version number in package.json...
-version="$(npm version ${version}.0.0)"
+npm_version="$(npm version ${lambda_version}.0.0)"
 
-echo Pushing ${version} to Git...
+echo Pushing ${npm_version} to Git...
 git push --quiet
 git push --tags --quiet
 
