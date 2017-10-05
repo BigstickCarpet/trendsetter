@@ -1,15 +1,28 @@
 #!/usr/bin/env bash
-# ====================================================================================
-# This script is meant for quickly deploying new code to AWS for during development
-# and testing.  It doesn't run any linters or tests beforehand, and it doesn't create
-# a new AWS Lambda version or update any aliases.
-# ====================================================================================
+# ==================================================================================================
+# This script is meant for quickly deploying new code to AWS for during development and testing.
+# All it does is package the code and deploy it to AWS Lambda.
+#
+# NOTE: This script DOES NOT run any linters or tests beforehand, and it DOES NOT create or update
+#       any AWS Lambda versions or aliases or AWS API Gateway stages.
+# ==================================================================================================
 
 # Stop on first error
 set -o errexit -o nounset -o pipefail
 
+echo
+echo Packaging the code...
+package_file="$(npm run package --silent)"
 
-#
-# This script packages and deploys the new code to S3.  It then updates the
-# $LATEST version of AWS Lambda function and deploys it to the "dev" stage of
-# AWS API Gateway.
+echo Deploying the code to AWS Lambda...
+json="$(
+  aws lambda update-function-code \
+    --function-name TrendsetterLambda  \
+    --zip-file fileb://${package_file}
+)"
+
+echo Done!
+
+# echo
+# echo "${json}"
+
