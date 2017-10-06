@@ -1,8 +1,7 @@
 'use strict';
 
 const apiGateway = require('../fixtures/apiGateway');
-const chai = require('chai');
-chai.should();
+const assert = require('../fixtures/assert');
 
 describe('Create new trends', () => {
 

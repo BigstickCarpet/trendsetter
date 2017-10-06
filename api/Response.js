@@ -31,6 +31,28 @@ class Response {
   }
 
   /**
+   * Creates an HTTP 400 (Bad Request) response.
+   *
+   * @param {object} body - The JSON body
+   * @param {object} [headers] - HTTP headers
+   * @returns {Response}
+   */
+  static badRequest (message, headers) {
+    return new Response(400, { error: 'BAD_REQUEST', message }, headers);
+  }
+
+  /**
+   * Creates an HTTP 401 (Unauthorized) response.
+   *
+   * @param {object} body - The JSON body
+   * @param {object} [headers] - HTTP headers
+   * @returns {Response}
+   */
+  static unauthorized (message, headers) {
+    return new Response(401, { error: 'UNAUTHORIZED', message }, headers);
+  }
+
+  /**
    * Creates an HTTP 404 (Not Found) response that indicates that the URL path could not be found
    * (as opposed to a path with an ID that can't be found in the database).
    *

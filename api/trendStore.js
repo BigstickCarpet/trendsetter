@@ -4,7 +4,7 @@ const uuid = require('uuid');
 const AWS = require('aws-sdk');
 const validate = require('./validate');
 
-const tableName = process.env.TRENDSETTER_TABLE_NAME;
+const TableName = process.env.TRENDSETTER_TABLE_NAME;
 const ttlHours = parseInt(process.env.TRENDSETTER_TTL_HOURS) || 1;
 
 // DynamoDB client API
@@ -19,31 +19,52 @@ const trendStore = module.exports = {
   /**
    * Creates a new trend with a new ID.
    *
+   * @param {string} user - The current user's ID
    * @param {object} trend - The trend to create
    * @returns {Promise<object>} - Resolves with the fully-populated trend object
    */
-  create (trend) {
-    trend.id = uuid.v4();
-    return trendStore.update(trend);
+  create (user, trend) {
+    trend = toTrendPOJO(trend);
+    trend.id = uuid.v4().replace(/-/g, '');
+    return trendStore.update(user, trend);
+  },
+
+  /**
+   * Creates multiple new trends with new IDs.
+   *
+   * @param {string} user - The current user's ID
+   * @param {object[]} trends - The trends to create
+   * @returns {Promise<object[]>} - Resolves with an array of fully-populated trend objects
+   */
+  createMany (user, trends) {
+    return Promise.all(
+      trends.map(trend => trendStore.create(user, trend))
+    );
   },
 
   /**
    * Updates an existing trend by its ID.
    *
-   * @param {object} trend - The trend to create
+   * @param {string} user - The current user's ID
+   * @param {object} trend - The trend to update
    * @returns {Promise<object>} - Resolves with the fully-populated trend object
    */
-  update (trend) {
+  update (user, trend) {
     return new Promise((resolve, reject) => {
+      validate.user('X-API-Key', user);
       validate.trend(trend);
+
+      // Add metadata to the DynamoDB item
+      trend = toTrendPOJO(trend);
+      trend.user = user;
       trend.expires = getExpiryTime();
 
-      dynamoDB.put({ TableName: tableName, Item: trend }, (err) => {
+      dynamoDB.put({ TableName, Item: trend }, (err) => {
         if (err) {
           reject(err);
         }
         else {
-          resolve(trend);
+          resolve(toTrendPOJO(trend));
         }
       });
     });
@@ -52,25 +73,84 @@ const trendStore = module.exports = {
   /**
    * Deletes an existing trend by its ID.
    *
+   * @param {string} user - The current user's ID
    * @param {string} id - The ID of the trend to delete
    * @returns {Promise} - Resolves without a return value
    */
-  delete (id) {
+  delete (user, id) {
+    validate.user('X-API-Key', user);
+    validate.guid('id', id);
+
     return Promise.reject(new Error('Not yet implemented'));
   },
 
   /**
    * Finds all trends that match the specified search criteria.
    *
+   * @param {string} user - The current user's ID
    * @param {object} criteria - The search criteria
-   * @param {string} criteria.type - The type of trends to search for
-   * @param {number} criteria.year - The year to return trends for
+   * @param {string} [criteria.type] - The type of trends to search for
+   * @param {number} [criteria.year] - The year to return trends for
    * @returns {Promise<object[]>} - Resolves with an array of trend objects
    */
-  find ({ type, year }) {
-    return Promise.reject(new Error('Not yet implemented'));
+  find (user, { type, year }) {
+    return new Promise((resolve, reject) => {
+      validate.user('X-API-Key', user);
+
+      // By default, find all trends for this user
+      let query = {
+        TableName,
+        FilterExpression: '#user = :user',
+        ExpressionAttributeNames: {
+          '#user': 'user'
+        },
+        ExpressionAttributeValues: {
+          ':user': user,
+        },
+      };
+
+      if (type) {
+        validate.nonEmptyString('type', type);
+        query.FilterExpression += ' and #type = :type';
+        query.ExpressionAttributeNames['#type'] = 'type';
+        query.ExpressionAttributeValues[':type'] = type;
+      }
+
+      if (year) {
+        validate.year('year', year);
+        query.FilterExpression += ' and :year between #from and #to';
+        query.ExpressionAttributeNames['#from'] = 'from';
+        query.ExpressionAttributeNames['#to'] = 'to';
+        query.ExpressionAttributeValues[':year'] = year;
+      }
+
+      dynamoDB.scan(query, (err, results) => {
+        if (err) {
+          reject(err);
+        }
+        else {
+          resolve(results.Items.map(toTrendPOJO));
+        }
+      });
+    });
   },
 };
+
+/**
+ * Converts a DynamoDB Item to a trend object.
+ *
+ * @param {object} item - The DynamoDB item
+ * @returns {object} - The trend object
+ */
+function toTrendPOJO (item) {
+  return {
+    id: item.id,
+    name: item.name,
+    type: item.type,
+    from: item.from,
+    to: item.to,
+  };
+}
 
 /**
  * Becuase the Trendsetter API is intended for demo purposes, it automatically "resets" periodically.

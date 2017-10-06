@@ -7,7 +7,14 @@ const uuid = require('uuid');
 const querystring = require('querystring');
 const trendsetterAPI = require('../../api');
 
-module.exports = {
+let apiKey = '';
+
+let apiGateway = module.exports = {
+  auth: (userId) => {
+    apiKey = userId;
+    return apiGateway;
+  },
+
   get: (path) => sendRequest('GET', path),
   post: (path, data) => sendRequest('POST', path, data),
   put: (path, data) => sendRequest('PUT', path, data),
@@ -47,11 +54,15 @@ function sendRequest (method, path, data) {
  * @returns {object}
  */
 function createEvent (method, path, data) {
+  let query;
+  [path, query] = path.split('?');
+
   return {
     resource: '/{proxy+}',
     path,
     httpMethod: method,
     headers: {
+      'X-API-Key': apiKey,
       'CloudFront-Forwarded-Proto': 'https',
       'CloudFront-Is-Desktop-Viewer': 'true',
       'CloudFront-Is-Mobile-Viewer': 'false',
@@ -65,7 +76,7 @@ function createEvent (method, path, data) {
       'X-Forwarded-Port': '443',
       'X-Forwarded-Proto': 'http',
     },
-    queryStringParameters: null,
+    queryStringParameters: query && querystring.parse(query),
     pathParameters: {
       proxy: path,
     },
