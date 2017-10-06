@@ -27,7 +27,7 @@ npm run bump --silent
 lambda_version=$(node -p "parseInt(require('./package.json').version)")
 
 echo
-echo Aliasing v${version} as Prod...
+echo Aliasing v${lambda_version} as Prod...
 json="$(
   aws lambda update-alias \
     --function-name TrendsetterLambda \
