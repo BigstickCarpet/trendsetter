@@ -1,20 +1,17 @@
 'use strict';
 
 const Response = require('../Response');
-const trendStore = require('../trendStore');
-const validate = require('../validate');
-const querystring = require('querystring');
 
-module.exports = findTrends;
+module.exports = createTrend;
 
 /**
- * Finds all trends, possibly filtered by query criteria.
+ * Creates a new trend.
  *
  * @param {object} request - The incoming HTTP request
  * @returns {Promsie<object>} - Resolves with the HTTP response object
  */
-function findTrends (request) {
-  return new Promise((resolve, reject) => {
+function createTrend () {
+  return new Promise((resolve) => {
     let id = '12345abcdef';
 
     resolve(Response.created({
