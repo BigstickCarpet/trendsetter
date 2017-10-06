@@ -1,6 +1,6 @@
 {
   "name": "trendsetter",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "private": true,
   "description": "The REST API for trendy developers",
   "keywords": [
