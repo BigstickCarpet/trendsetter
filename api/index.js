@@ -5,6 +5,10 @@ const Response = require('./Response');
 
 const routes = [
   {
+    pattern: /^\/?$/i,
+    GET: require('./handlers/apiInfo'),
+  },
+  {
     pattern: /^\/trends\/?$/i,
     GET: require('./handlers/findTrends'),
     POST: require('./handlers/createTrend'),
@@ -46,13 +50,13 @@ function findHandler ({ path, httpMethod }) {
     // Find the route whose RegEx pattern matches the path
     let route = routes.find(r => r.pattern.test(path));
     if (!route) {
-      throw Response.pathNotFound(`The Trendsetter API does not have a "${path}" endpoint`);
+      throw Response.pathNotFound(`The Trendsetter API does not have a ${path} endpoint`);
     }
 
     // Find the handler function for the HTTP method
     let handler = route[httpMethod];
     if (!handler) {
-      throw Response.methodNotAllowed(`The "${path}" endpoint does not allow ${httpMethod}`);
+      throw Response.methodNotAllowed(`The ${path} endpoint does not allow ${httpMethod}`);
     }
 
     resolve(handler);
