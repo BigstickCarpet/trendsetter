@@ -14,3 +14,6 @@ process.env.LAMBDA_RUNTIME_DIR = process.cwd();
 // These environment variables are required by the Trendsetter Lambda function
 process.env.TRENDSETTER_TABLE_NAME = 'Trendsetter.Trends';
 process.env.TRENDSETTER_TTL_HOURS = '4';
+
+// Enable "test mode"
+process.env.NODE_ENV = 'test';
