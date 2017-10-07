@@ -2,18 +2,30 @@
 
 // If you leave these environment variables blank, then the AWS SDK will automatically
 // read your credentials from ~/.aws/credentials
-process.env.AWS_ACCESS_KEY_ID = '';
-process.env.AWS_SECRET_ACCESS_KEY = '';
-process.env.AWS_SESSION_TOKEN = '';
+setEnv('AWS_ACCESS_KEY_ID', '');
+setEnv('AWS_SECRET_ACCESS_KEY', '');
+setEnv('AWS_SESSION_TOKEN', '');
 
 // These environment variables mimic AWS Lambda
-process.env.AWS_REGION = 'us-east-1';
-process.env.LAMBDA_TASK_ROOT = process.cwd();
-process.env.LAMBDA_RUNTIME_DIR = process.cwd();
+setEnv('AWS_REGION', 'us-east-1');
+setEnv('LAMBDA_TASK_ROOT', process.cwd());
+setEnv('LAMBDA_RUNTIME_DIR', process.cwd());
 
 // These environment variables are required by the Trendsetter Lambda function
-process.env.TRENDSETTER_TABLE_NAME = 'Trendsetter.Trends';
-process.env.TRENDSETTER_TTL_HOURS = '4';
+setEnv('TRENDSETTER_TABLE_NAME', 'Trendsetter.Trends');
+setEnv('TRENDSETTER_TTL_HOURS', '4');
 
 // Enable "test mode"
-process.env.NODE_ENV = 'test';
+setEnv('NODE_ENV', 'test');
+
+/**
+ * Sets an environment variable, unless it's already set.
+ *
+ * @param {string} name - The environment variable name
+ * @param {string} value - The value to set, unless a value is already set
+ */
+function setEnv (name, value) {
+  if (!process.env[name]) {
+    process.env[name] = value;
+  }
+}
