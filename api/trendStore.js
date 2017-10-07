@@ -7,9 +7,9 @@ const validate = require('./validate');
 const TableName = process.env.TRENDSETTER_TABLE_NAME;
 const ttlHours = parseInt(process.env.TRENDSETTER_TTL_HOURS) || 1;
 
-console.log('AWS_ACCESS_KEY_ID = ' + (process.env.AWS_ACCESS_KEY_ID || '?')[0]);
-console.log('AWS_SECRET_ACCESS_KEY = ' + (process.env.AWS_SECRET_ACCESS_KEY || '?')[0]);
-console.log('AWS_REGION = ' + process.env.AWS_REGION || '?');
+console.log('AWS_ACCESS_KEY_ID = ' + (process.env.AWS_ACCESS_KEY_ID || '').length);
+console.log('AWS_SECRET_ACCESS_KEY = ' + (process.env.AWS_SECRET_ACCESS_KEY || '').length);
+console.log('AWS_REGION = ' + (process.env.AWS_REGION || '?').length);
 
 // DynamoDB client API
 const dynamoDB = new AWS.DynamoDB.DocumentClient({
