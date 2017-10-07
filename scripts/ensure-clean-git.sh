@@ -11,14 +11,12 @@ echo
 echo Checking your Git working directory...
 git update-index -q --ignore-submodules --refresh
 
-if ! git diff-files --quiet --ignore-submodules --
-then
+if ! git diff-files --quiet --ignore-submodules --; then
     echo You have unstaged changes in your Git working tree
     exit 1
 fi
 
-if ! git diff-index --cached --quiet HEAD --ignore-submodules --
-then
+if ! git diff-index --cached --quiet HEAD --ignore-submodules --; then
     eccho You have uncommitted changes in your Git index
     exit 1
 fi

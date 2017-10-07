@@ -15,17 +15,23 @@ echo
 echo Updating all dependencies...
 npm run upgrade --silent
 
-echo
-echo Committing updated dependencies...
-git commit --all -m "Updated dependencies" --quiet
+changes=$(git diff-index --name-only HEAD)
+if [ -n "$changes" ]; then
+  echo
+  echo Committing updated dependencies...
+  git commit --all -m "Updated dependencies" --quiet
+fi
 
 echo
 echo Running ESLint...
 npm run lint --silent
 
-echo
-echo Committing ESLint audo-fixes...
-git commit --all -m "ESLint auto-fixes" --quiet
+changes=$(git diff-index --name-only HEAD)
+if [ -n "$changes" ]; then
+  echo
+  echo Committing ESLint audo-fixes...
+  git commit --all -m "ESLint auto-fixes" --quiet
+fi
 
 echo
 echo Running tests...
