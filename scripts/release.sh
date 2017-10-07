@@ -9,7 +9,7 @@
 set -o errexit -o nounset -o pipefail
 
 # Make sure the Git working directory is clean
-ensure-clean-git.sh
+./scripts/ensure-clean-git.sh
 
 echo
 echo Updating all dependencies...
