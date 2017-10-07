@@ -7,17 +7,6 @@ const assert = require('../fixtures/assert');
 
 describe('Find trends', () => {
 
-  it('requires authentication', () => {
-    return apiGateway
-      .auth(null)
-      .get('/trends')
-      .then(res => {
-        let body = assert.isErrorResponse(res, 401);
-        body.error.should.equal('UNAUTHORIZED');
-        body.message.should.equal('The X-API-Key header is missing');
-      });
-  });
-
   it('returns sample trends if no trends exist', () => {
     // Use a unique User ID, so we know there's no existing trends
     let user = `${Date.now()}`;
