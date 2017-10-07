@@ -5,7 +5,7 @@ const Response = require('./Response');
 const nextYear = new Date().getUTCFullYear() + 1;
 const minimumYear = nextYear - 500;
 const guidPattern = /^[a-f0-9]{32}$/;
-const userIdPattern = /^[a-z0-9]+$/;
+const userIdPattern = /^[a-z0-9]+$/i;
 
 /**
  * Provides validation methods for fields.
