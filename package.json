@@ -18,12 +18,12 @@
     "type": "git",
     "url": "https://github.com/BigstickCarpet/trendsetter.git"
   },
-  "main": "api/index.js",
+  "main": "lib/index.js",
   "files": [
-    "api"
+    "lib"
   ],
   "scripts": {
-    "lint": "eslint api test --fix",
+    "lint": "eslint . --fix",
     "test": "mocha",
     "cover": "istanbul cover _mocha",
     "start": "node scripts/start.js",

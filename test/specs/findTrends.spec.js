@@ -1,7 +1,7 @@
 'use strict';
 
-const trendStore = require('../../api/trendStore');
-const sampleTrends = require('../../api/sampleTrends.json');
+const trendStore = require('../../lib/trendStore');
+const sampleTrends = require('../../lib/sampleTrends.json');
 const apiGateway = require('../fixtures/apiGateway');
 const assert = require('../fixtures/assert');
 

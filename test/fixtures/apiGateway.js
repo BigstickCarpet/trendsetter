@@ -5,7 +5,7 @@ require('./environment');
 
 const uuid = require('uuid');
 const querystring = require('querystring');
-const trendsetterAPI = require('../../api');
+const trendsetter = require('../../lib');
 
 let apiKey = '';
 
@@ -34,7 +34,7 @@ function sendRequest (method, path, data) {
     let event = createEvent(method, path, data);
     let context = createContext(event, resolve, reject);
 
-    trendsetterAPI.handler(event, context, (err, response) => {
+    trendsetter.handler(event, context, (err, response) => {
       if (err) {
         reject(err);
       }
