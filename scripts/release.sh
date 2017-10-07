@@ -17,7 +17,7 @@ npm run upgrade --silent
 
 echo
 echo Committing updated dependencies...
-git commit --all -m "Updated dependencies"
+git commit --all -m "Updated dependencies" --quiet
 
 echo
 echo Running ESLint...
@@ -25,7 +25,7 @@ npm run lint --silent
 
 echo
 echo Committing ESLint audo-fixes...
-git commit --all -m "ESLint auto-fixes"
+git commit --all -m "ESLint auto-fixes" --quiet
 
 echo
 echo Running tests...
