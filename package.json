@@ -24,7 +24,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint . --fix",
+    "lint": "eslint bin docs lib test --fix",
     "test": "mocha",
     "cover": "istanbul cover _mocha",
     "start": "node bin/server.js",
