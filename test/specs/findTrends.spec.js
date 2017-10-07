@@ -12,7 +12,7 @@ describe('Find trends', () => {
       .auth(null)
       .get('/trends')
       .then(res => {
-        let body = assert.isErrorResponse(res);
+        let body = assert.isErrorResponse(res, 406);
         body.error.should.equal('UNAUTHORIZED');
         body.message.should.equal('The X-API-Key header is missing');
       });
@@ -26,9 +26,7 @@ describe('Find trends', () => {
       .auth(user)
       .get('/trends')
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(sampleTrends.length);
         trends.every(trend => delete trend.id);
         trends.should.have.same.deep.members(sampleTrends);
@@ -48,9 +46,7 @@ describe('Find trends', () => {
       .then(updatedTrends => testTrends = updatedTrends)
       .then(() => apiGateway.auth(user).get('/trends'))
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
         trends.should.not.equal(testTrends);
         trends.should.have.same.deep.members(testTrends);
@@ -70,9 +66,7 @@ describe('Find trends', () => {
     return trendStore.createMany(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends?type=Fashion'))
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(0);
       });
   });
@@ -92,9 +86,7 @@ describe('Find trends', () => {
       .then(updatedTrends => testTrends = updatedTrends)
       .then(() => apiGateway.auth(user).get('/trends?type=Toys'))
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
         trends.should.have.same.deep.members([testTrends[0], testTrends[3]]);
       });
@@ -115,9 +107,7 @@ describe('Find trends', () => {
       .then(updatedTrends => testTrends = updatedTrends)
       .then(() => apiGateway.auth(user).get('/trends?year=1990'))
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
         trends.should.have.same.deep.members([testTrends[0], testTrends[1]]);
       });
@@ -138,9 +128,7 @@ describe('Find trends', () => {
       .then(updatedTrends => testTrends = updatedTrends)
       .then(() => apiGateway.auth(user).get('/trends?year=1990&type=TV%20Shows'))
       .then(res => {
-        let trends = assert.isSuccessfulResponse(res);
-        res.statusCode.should.equal(200);
-
+        let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(1);
         trends.should.have.same.deep.members([testTrends[1]]);
       });
