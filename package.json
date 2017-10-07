@@ -19,6 +19,7 @@
     "url": "https://github.com/BigstickCarpet/trendsetter.git"
   },
   "main": "lib/index.js",
+  "bin": "bin/server.js",
   "files": [
     "lib"
   ],
@@ -26,7 +27,7 @@
     "lint": "eslint . --fix",
     "test": "mocha",
     "cover": "istanbul cover _mocha",
-    "start": "node scripts/start.js",
+    "start": "node bin/server.js",
     "package": "scripts/package.sh",
     "deploy": "scripts/deploy.sh",
     "bump": "scripts/bump.sh",
