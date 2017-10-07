@@ -12,7 +12,7 @@ describe('Find trends', () => {
       .auth(null)
       .get('/trends')
       .then(res => {
-        let body = assert.isErrorResponse(res, 406);
+        let body = assert.isErrorResponse(res, 401);
         body.error.should.equal('UNAUTHORIZED');
         body.message.should.equal('The X-API-Key header is missing');
       });
