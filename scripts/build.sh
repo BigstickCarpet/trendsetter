@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==================================================================================================
-# This script is meant for quickly deploying new code to AWS for during development and testing.
+# This script is meant for quickly deploying new API code to AWS during development and testing.
 # All it does is package the code and deploy it to AWS Lambda.
 #
 # NOTE: This script DOES NOT run any linters or tests beforehand, and it DOES NOT create or update
