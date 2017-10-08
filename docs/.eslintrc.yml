@@ -8,3 +8,6 @@ env:
 extends:
   - modular/browser
   - modular/es5
+
+rules:
+  no-alert: off

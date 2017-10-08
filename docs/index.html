@@ -78,8 +78,13 @@
         <div class="form-group">
           <label for="name">Start a new trend</label>
           <input type="text" class="form-control input-sm" id="name" name="name" size="30" maxlength="50" autofocus placeholder="what's trending?">
-          <select class="form-control input-sm" id="type">
+          <select class="form-control input-sm" id="type" name="type">
             <option disabled selected></option>
+            <option>Fashion</option>
+            <option>Food</option>
+            <option>Music</option>
+            <option>Technologies</option>
+            <option>Toys</option>
             <option>TV Shows</option>
           </select>
         </div>
@@ -112,7 +117,7 @@
       </table>
 
       <script src="/js/jquery-3.2.1.min.js"></script>
-      <script src="/js/script.js"></script>
+      <script src="/js/trendsetter.js"></script>
     </main>
 
     <footer class="container text-muted">
