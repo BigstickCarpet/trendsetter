@@ -5,10 +5,11 @@
 process.env.AWS_REGION = 'us-east-1';
 process.env.TRENDSETTER_TABLE_NAME = 'Trendsetter.Trends';
 
+const _ = require('lodash');
 const uuid = require('uuid');
+const cors = require('cors');
 const express = require('express');
 const querystring = require('querystring');
-const cloneDeep = require('lodash.clonedeep');
 const trendsetter = require('../lib');
 const sampleRequest = require('../lib/sampleRequest.json');
 const sampleContext = require('../lib/sampleContext.json');
@@ -20,6 +21,7 @@ website.listen(7070, () => console.log('The Trendsetter website is now running a
 
 // Serve the Trendsetter API on port 8080
 let api = express();
+api.use(cors());
 api.use(mockApiGateway);
 api.listen(8080, () => console.log('The Trendsetter API is now running at http://localhost:8080'));
 
@@ -82,7 +84,7 @@ function mockApiGateway (req, res) {
  * @returns {object}
  */
 function createRequest (httpRequest) {
-  let apiGatewayRequest = cloneDeep(sampleRequest);
+  let apiGatewayRequest = _.cloneDeep(sampleRequest);
 
   apiGatewayRequest.path = httpRequest.path;
   apiGatewayRequest.httpMethod = httpRequest.method.toUpperCase();
@@ -110,7 +112,7 @@ function createRequest (httpRequest) {
  * @returns {object}
  */
 function createContext (apiGatewayRequest) {
-  let context = cloneDeep(sampleContext);
+  let context = _.cloneDeep(sampleContext);
 
   context.invokeid = apiGatewayRequest.requestContext.requestId;
   context.awsRequestId = apiGatewayRequest.requestContext.requestId;

@@ -3,9 +3,9 @@
 // NOTE: Environment variables must be set BEFORE loading the API
 require('./environment');
 
+const _ = require('lodash');
 const uuid = require('uuid');
 const querystring = require('querystring');
-const cloneDeep = require('lodash.clonedeep');
 const trendsetter = require('../../lib');
 const sampleRequest = require('../../lib/sampleRequest.json');
 const sampleContext = require('../../lib/sampleContext.json');
@@ -60,7 +60,7 @@ function createRequest (method, path, data) {
   let query;
   [path, query] = path.split('?');
 
-  let request = cloneDeep(sampleRequest);
+  let request = _.cloneDeep(sampleRequest);
 
   request.path = path;
   request.httpMethod = method;
@@ -83,7 +83,7 @@ function createRequest (method, path, data) {
  * @returns {object}
  */
 function createContext (apiGatewayRequest) {
-  let context = cloneDeep(sampleContext);
+  let context = _.cloneDeep(sampleContext);
 
   context.invokeid = apiGatewayRequest.requestContext.requestId;
   context.awsRequestId = apiGatewayRequest.requestContext.requestId;
