@@ -105,11 +105,13 @@ let assert = module.exports = {
    * Asserts that the given trends match the specified test data,
    * even if the test data does not contain all fields.
    *
-   * @param {object[]} trends - An array of trends that were returned by the API
-   * @param {object[]} testData - An array of trend objects to compare
+   * @param {object|object[]} trends - One or more trends that were returned by the API
+   * @param {object|object[]} testData - One or more trend objects to compare
    */
   matchesTestData (trends, testData) {
-    trends.should.be.an('array').with.lengthOf(testData.length);
+    trends = Array.isArray(trends) ? trends : [trends];
+    testData = Array.isArray(testData) ? testData : [testData];
+    trends.should.have.lengthOf(testData.length);
 
     // Delete any fields from the trends that don't exist on the test data
     let trendsCopy = _.cloneDeep(trends);
