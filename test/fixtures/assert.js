@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const chai = require('chai');
 const expect = chai.expect;
 chai.should();
@@ -99,4 +100,30 @@ let assert = module.exports = {
 
     return body;
   },
+
+  /**
+   * Asserts that the given trends match the specified test data,
+   * even if the test data does not contain all fields.
+   *
+   * @param {object[]} trends - An array of trends that were returned by the API
+   * @param {object[]} testData - An array of trend objects to compare
+   */
+  matchesTestData (trends, testData) {
+    trends.should.be.an('array').with.lengthOf(testData.length);
+
+    // Delete any fields from the trends that don't exist on the test data
+    let trendsCopy = _.cloneDeep(trends);
+    trendsCopy.forEach(trend => {
+      if (!testData[0].id) {
+        delete trend.id;
+      }
+      if (!testData[0].links) {
+        delete trend.links;
+      }
+    });
+
+    // Everything else should match
+    trendsCopy.should.have.same.deep.members(testData);
+  },
+
 };

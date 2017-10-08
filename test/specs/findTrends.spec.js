@@ -1,21 +1,19 @@
 'use strict';
 
-const trendStore = require('../../lib/trendStore');
-const sampleTrends = require('../../lib/sampleTrends.json');
 const apiGateway = require('../fixtures/apiGateway');
+const testData = require('../fixtures/testData');
 const assert = require('../fixtures/assert');
 
 describe('Find trends', () => {
 
   it('returns sample trends for the demo user if no trends exist', () => {
     return apiGateway
-      .auth('demo')
+      .auth('DEMO')
       .get('/trends')
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
-        trends.should.be.an('array').with.lengthOf(sampleTrends.length);
-        trends.every(trend => delete trend.id);
-        trends.should.have.same.deep.members(sampleTrends);
+        trends.forEach(assert.isValidTrend);
+        assert.matchesTestData(trends, testData.sampleTrends);
       });
   });
 
@@ -41,14 +39,13 @@ describe('Find trends', () => {
       { name: 'Full House', type: 'TV Shows', from: 2016, to: 2017 },
     ];
 
-    return trendStore.createMany(user, testTrends)
-      .then(updatedTrends => testTrends = updatedTrends)
+    return testData.create(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends'))
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
-        trends.should.not.equal(testTrends);
-        trends.should.have.same.deep.members(testTrends);
+        trends.forEach(assert.isValidTrend);
+        assert.matchesTestData(trends, testTrends);
       });
   });
 
@@ -62,7 +59,7 @@ describe('Find trends', () => {
       { name: 'Vinyl Records', type: 'Music', from: 1984, to: 1985 },
     ];
 
-    return trendStore.createMany(user, testTrends)
+    return testData.create(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends?type=Fashion'))
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
@@ -81,13 +78,13 @@ describe('Find trends', () => {
       { name: 'My Little Pony', type: 'Toys', from: 2010, to: 2014 },
     ];
 
-    return trendStore.createMany(user, testTrends)
-      .then(updatedTrends => testTrends = updatedTrends)
+    return testData.create(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends?type=Toys'))
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
-        trends.should.have.same.deep.members([testTrends[0], testTrends[3]]);
+        trends.forEach(assert.isValidTrend);
+        assert.matchesTestData(trends, [testTrends[0], testTrends[3]]);
       });
   });
 
@@ -102,13 +99,13 @@ describe('Find trends', () => {
       { name: 'My Little Pony', type: 'Toys', from: 2010, to: 2014 },
     ];
 
-    return trendStore.createMany(user, testTrends)
-      .then(updatedTrends => testTrends = updatedTrends)
+    return testData.create(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends?year=1990'))
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(2);
-        trends.should.have.same.deep.members([testTrends[0], testTrends[1]]);
+        trends.forEach(assert.isValidTrend);
+        assert.matchesTestData(trends, [testTrends[0], testTrends[1]]);
       });
   });
 
@@ -123,13 +120,13 @@ describe('Find trends', () => {
       { name: 'My Little Pony', type: 'Toys', from: 2010, to: 2014 },
     ];
 
-    return trendStore.createMany(user, testTrends)
-      .then(updatedTrends => testTrends = updatedTrends)
+    return testData.create(user, testTrends)
       .then(() => apiGateway.auth(user).get('/trends?year=1990&type=TV%20Shows'))
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
         trends.should.be.an('array').with.lengthOf(1);
-        trends.should.have.same.deep.members([testTrends[1]]);
+        trends.forEach(assert.isValidTrend);
+        assert.matchesTestData(trends, [testTrends[1]]);
       });
   });
 
