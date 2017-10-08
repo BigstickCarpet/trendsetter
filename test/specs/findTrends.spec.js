@@ -7,7 +7,19 @@ const assert = require('../fixtures/assert');
 
 describe('Find trends', () => {
 
-  it('returns sample trends if no trends exist', () => {
+  it('returns sample trends for the demo user if no trends exist', () => {
+    return apiGateway
+      .auth('demo')
+      .get('/trends')
+      .then(res => {
+        let trends = assert.isSuccessfulResponse(res, 200);
+        trends.should.be.an('array').with.lengthOf(sampleTrends.length);
+        trends.every(trend => delete trend.id);
+        trends.should.have.same.deep.members(sampleTrends);
+      });
+  });
+
+  it('returns an empty array if no trends exist for a non-demo user', () => {
     // Use a unique User ID, so we know there's no existing trends
     let user = `${Date.now()}`;
 
@@ -16,9 +28,7 @@ describe('Find trends', () => {
       .get('/trends')
       .then(res => {
         let trends = assert.isSuccessfulResponse(res, 200);
-        trends.should.be.an('array').with.lengthOf(sampleTrends.length);
-        trends.every(trend => delete trend.id);
-        trends.should.have.same.deep.members(sampleTrends);
+        trends.should.be.an('array').with.lengthOf(0);
       });
   });
 
