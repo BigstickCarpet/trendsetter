@@ -14,14 +14,20 @@ let assert = module.exports = {
   isValidTrend (trend) {
     try {
       expect(trend).to.be.an('object');
-      trend.should.have.keys('id', 'type', 'name', 'from', 'to');
+      trend.should.have.keys('id', 'type', 'name', 'from', 'to', 'links');
 
-      expect(trend.id).to.be.a('string').and.match(/^[a-f0-9]{32}^/);
+      expect(trend.id).to.be.a('string').and.match(/^[a-f0-9]{32}$/);
       expect(trend.type).to.be.a('string').and.not.empty;
       expect(trend.name).to.be.a('string').and.not.empty;
+
       expect(trend.to).to.be.a('number').above(1600).and.below(3000);
       expect(trend.from).to.be.a('number').above(1600).and.below(3000);
-      trend.from.should.be.atMost(trend.to);
+      trend.from.should.be.at.most(trend.to);
+
+      expect(trend.links).to.be.an('object');
+      trend.links.should.have.keys('self');
+      expect(trend.links.self).to.be.a('string');
+      trend.links.self.should.match(/^http:\/\/localhost\/trends\/[a-f0-9]{32}$/);
 
       return trend;
     }
