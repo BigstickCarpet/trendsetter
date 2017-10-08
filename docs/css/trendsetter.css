@@ -1,0 +1,74 @@
+/* --------------------- Navbar icons --------------------- */
+.navbar-nav .fa,
+.navbar-nav .logo-icon {
+  margin-right: .2em;
+}
+
+.logo-icon {
+  display: inline-block;
+  width: 18px;
+  vertical-align: top;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+}
+
+.navbar-nav li:hover .logo-icon {
+  background-position-x: -18px;
+}
+
+.openapi .logo-icon {
+  background-image: url(../img/openapi-logo.png);
+  height: 18px;
+}
+
+.navbar-nav li.openapi:hover a {
+  color: #6CA338;
+}
+
+.postman .logo-icon {
+  background-image: url(../img/postman-logo.png);
+  height: 19px;
+}
+
+.navbar-nav li.postman:hover a {
+  color: #F15A24;
+}
+
+
+/* ----------------- "What's This" section ----------------- */
+details.info {
+  display: block;
+  background-color: #ffe4c4;
+  border: solid 3px #ccb79e;
+  color: #6b5f51;
+  border-radius: 8px;
+  padding: .2em;
+  margin: 0 0 1em 0;
+}
+
+details.info > summary {
+  display: block;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+}
+
+details.info > p {
+  padding: .5em .5em 0 .5em;
+}
+
+
+/* --------------- "Start a new Trend" form --------------- */
+.form-group {
+  margin-right: 1em;
+}
+
+label {
+  margin-right: .2em;
+}
+
+
+/* ------------------------ Footer ------------------------ */
+footer {
+  text-align: center;
+}

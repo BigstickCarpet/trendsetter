@@ -7,7 +7,9 @@
 
     <title>Trendsetter</title>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.min.css" rel="stylesheet">
+    <link href="/css/trendsetter.css" rel="stylesheet">
   </head>
   <body>
     <header class="navbar navbar-inverse navbar-static-top">
@@ -17,35 +19,81 @@
         </div>
         <nav>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="https://api.trendsetter.bigstickcarpet.com">API</a></li>
-            <li><a href="/open-api.yaml">OpenAPI</a></li>
-            <li><a href="https://app.getpostman.com/run-collection/be4676550c522ad0ad95#?env%5BTrendsetter%20(prod).template%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnRyZW5kc2V0dGVyLmJpZ3N0aWNrY2FycGV0LmNvbSIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhcGlfa2V5IiwidmFsdWUiOiI3aGlzMTVhU2FtcGxlS2V5IiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6InR5cGUiLCJ2YWx1ZSI6IlRveXMiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoieWVhciIsInZhbHVlIjoiMTk5OCIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJuYW1lIiwidmFsdWUiOiJGdXJiaWVzIiwidHlwZSI6InRleHQifV0=">Postman</a></li>
-            <li><a href="https://documenter.getpostman.com/view/220187/trendsetter-api/2MuEBW">Docs</a></li>
+            <li class="openapi">
+              <a href="/open-api.yaml">
+                <i class="logo-icon" aria-hidden="true"></i>
+                OpenAPI
+              </a>
+            </li>
+            <li class="postman">
+              <a href="https://app.getpostman.com/run-collection/be4676550c522ad0ad95#?env%5BTrendsetter%20(prod).template%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnRyZW5kc2V0dGVyLmJpZ3N0aWNrY2FycGV0LmNvbSIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhcGlfa2V5IiwidmFsdWUiOiI3aGlzMTVhU2FtcGxlS2V5IiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6InR5cGUiLCJ2YWx1ZSI6IlRveXMiLCJ0eXBlIjoidGV4dCJ9LHsiZW5hYmxlZCI6dHJ1ZSwia2V5IjoieWVhciIsInZhbHVlIjoiMTk5OCIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJuYW1lIiwidmFsdWUiOiJGdXJiaWVzIiwidHlwZSI6InRleHQifV0=">
+                <i class="logo-icon" aria-hidden="true"></i>
+                Postman
+              </a>
+            </li>
+            <li>
+              <a href="https://api.trendsetter.bigstickcarpet.com">
+                <i class="fa fa-code fa-lg" aria-hidden="true"></i>
+                API
+              </a>
+            </li>
+            <li>
+              <a href="https://documenter.getpostman.com/view/220187/trendsetter-api/2MuEBW">
+                <i class="fa fa-book fa-lg" aria-hidden="true"></i>
+                Docs
+              </a>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
 
     <main class="container">
+      <details class="info">
+        <summary>
+            <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+            What is this?
+        </summary>
+        <p>
+          This web page is the <i>very simple</i> UI for a <i>very simple</i>
+          <a href="https://documenter.getpostman.com/view/220187/trendsetter-api/2MuEBW">REST API</a>
+          that I like to use for demos and
+          <a href="https://github.com/BigstickCarpet/super-powered-api-testing">training</a>.
+        </p>
+        <p>
+          <b>The idea is simple:</b><br>
+          Trendsetter lets you set trends. That is, you get to decide <i>what's</i> trendy, and <i>when</i>.
+          Are bell-bottoms due for a comeback? Is the handlebar mustache fad over? Has Crystal Pepsi
+          become so retro that it's cool now? The decision is all yours
+        </p>
+        <p>
+          <b>There's just one rule:</b><br>
+          Once something's trendy, it can't be trendy again for 10 years. So you'll have to wait just a
+          <i>little bit longer</i> before resurrecting MySpace.
+        </p>
+      </details>
 
-      <form id="new-trend" class="well form-inline col-md-8 col-md-push-4" method="post" action="api/trends">
+      <form id="new-trend" class="well form-inline" method="post" action="https://api.trendsetter.bigstickcarpet.com/trends">
+
         <div class="form-group">
-          <label for="name">Start a new trend:</label>
-          <input type="text" class="form-control input-sm" id="name" name="name" autofocus placeholder="what's trending?">
+          <label for="name">Start a new trend</label>
+          <input type="text" class="form-control input-sm" id="name" name="name" size="30" maxlength="50" autofocus placeholder="what's trending?">
+          <select class="form-control input-sm" id="type">
+            <option disabled selected></option>
+            <option>TV Shows</option>
+          </select>
         </div>
         <div class="form-group">
           <label for="from">From</label>
-          <input type="number" class="form-control input-sm" id="from" name="from" size="4" min="1" max="9999" value="2016">
+          <input type="number" class="form-control input-sm" id="from" name="from" size="4" min="1" max="9999" placeholder="2016">
         </div>
         <div class="form-group">
           <label for="to">To</label>
-          <input type="number" class="form-control input-sm" id="to" name="to" size="4" min="1" max="9999" value="2020">
+          <input type="number" class="form-control input-sm" id="to" name="to" size="4" min="1" max="9999" placeholder="2020">
         </div>
 
         <button type="submit" class="btn btn-success btn-sm">Start this trend!</button>
       </form>
-
-      <h2 class="col-md-4 col-md-pull-8">Trends <small>past and present</small></h2>
 
       <table class="table table-striped table-hover">
         <thead>
@@ -63,13 +111,15 @@
         </tbody>
       </table>
 
-      <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-      <script src="script.js"></script>
-
+      <script src="/js/jquery-3.2.1.min.js"></script>
+      <script src="/js/script.js"></script>
     </main>
 
-    <footer class="container text-muted" style="font-size: smaller; text-align: center; margin: 2em;">
-      <a href="https://bigstickcarpet.github.io/super-powered-api-testing">Super-Powered API Testing</a>
+    <footer class="container text-muted">
+      <a href="https://github.com/BigstickCarpet/trendsetter">
+          <i class="fa fa-github fa-lg" aria-hidden="true"></i>
+          Trendsetter
+        </a>
       by <a href="http://jamesmessinger.com">James Messinger</a>
     </footer>
 

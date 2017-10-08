@@ -1,0 +1,10 @@
+# ESLint config
+# http://eslint.org/docs/user-guide/configuring
+# https://github.com/BigstickCarpet/eslint-config-modular
+
+env:
+  jquery: true
+
+extends:
+  - modular/browser
+  - modular/es5
