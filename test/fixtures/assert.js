@@ -27,7 +27,7 @@ let assert = module.exports = {
       expect(trend.links).to.be.an('object');
       trend.links.should.have.keys('self');
       expect(trend.links.self).to.be.a('string');
-      trend.links.self.should.match(/^http:\/\/localhost\/trends\/[a-f0-9]{32}$/);
+      trend.links.self.should.equal(`http://localhost/trends/${trend.id}`);
 
       return trend;
     }
