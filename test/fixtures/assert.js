@@ -6,6 +6,32 @@ chai.should();
 
 let assert = module.exports = {
   /**
+   * Asserts that the given trend is valid.
+   *
+   * @param {object} trend - The trend to validate
+   * @returns {object} - Returns the trend
+   */
+  isValidTrend (trend) {
+    try {
+      expect(trend).to.be.an('object');
+      trend.should.have.keys('id', 'type', 'name', 'from', 'to');
+
+      expect(trend.id).to.be.a('string').and.match(/^[a-f0-9]{32}^/);
+      expect(trend.type).to.be.a('string').and.not.empty;
+      expect(trend.name).to.be.a('string').and.not.empty;
+      expect(trend.to).to.be.a('number').above(1600).and.below(3000);
+      expect(trend.from).to.be.a('number').above(1600).and.below(3000);
+      trend.from.should.be.atMost(trend.to);
+
+      return trend;
+    }
+    catch (error) {
+      console.error(`\nTrend: \n${JSON.stringify(trend, null, 2)}\n`);
+      throw error;
+    }
+  },
+
+  /**
    * Asserts that the given response is well formed.
    *
    * @param {object} response - The HTTP response to validate
