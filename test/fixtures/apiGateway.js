@@ -5,7 +5,10 @@ require('./environment');
 
 const uuid = require('uuid');
 const querystring = require('querystring');
+const cloneDeep = require('lodash.clonedeep');
 const trendsetter = require('../../lib');
+const sampleRequest = require('../../lib/sampleRequest.json');
+const sampleContext = require('../../lib/sampleContext.json');
 
 let apiKey = '';
 
@@ -31,10 +34,10 @@ let apiGateway = module.exports = {
  */
 function sendRequest (method, path, data) {
   return new Promise((resolve, reject) => {
-    let event = createEvent(method, path, data);
-    let context = createContext(event, resolve, reject);
+    let request = createRequest(method, path, data);
+    let context = createContext(request);
 
-    trendsetter.handler(event, context, (err, response) => {
+    trendsetter.handler(request, context, (err, response) => {
       if (err) {
         reject(err);
       }
@@ -46,89 +49,44 @@ function sendRequest (method, path, data) {
 }
 
 /**
- * Creates an object that mimics the AWS API Gateway "event" parameter
+ * Creates an AWS API Gateway request object
  *
  * @param {string} method - The HTTP method (e.g. "GET")
  * @param {string} path - The URL path (e.g. "/trends")
  * @param {object} [data] - Key/value data to send
  * @returns {object}
  */
-function createEvent (method, path, data) {
+function createRequest (method, path, data) {
   let query;
   [path, query] = path.split('?');
 
-  return {
-    resource: '/{proxy+}',
-    path,
-    httpMethod: method,
-    headers: {
-      'X-API-Key': apiKey,
-      'CloudFront-Forwarded-Proto': 'https',
-      'CloudFront-Is-Desktop-Viewer': 'true',
-      'CloudFront-Is-Mobile-Viewer': 'false',
-      'CloudFront-Is-SmartTV-Viewer': 'false',
-      'CloudFront-Is-Tablet-Viewer': 'false',
-      'CloudFront-Viewer-Country': 'US',
-      Via: '1.1 example87df087a954630c4cf7b8e364.cloudfront.net (CloudFront)',
-      'X-Amz-Cf-Id': 'YarliTso-oW9rCtlsibQeHpoaD9n1uEunP7AFCJullzke1ed-hTeRN==',
-      'X-Amzn-Trace-Id': 'Root=1-76d1oq0c-6b3afecf5c1c92373381c220',
-      'X-Forwarded-For': '123.123.123.123',
-      'X-Forwarded-Port': '443',
-      'X-Forwarded-Proto': 'http',
-    },
-    queryStringParameters: query && querystring.parse(query),
-    pathParameters: {
-      proxy: path,
-    },
-    stageVariables: null,
-    requestContext: {
-      path,
-      accountId: '619784300716',
-      resourceId: '36481f',
-      stage: 'prod',
-      requestId: uuid.v4(),
-      identity: {
-        cognitoIdentityPoolId: null,
-        accountId: null,
-        cognitoIdentityId: null,
-        caller: null,
-        apiKey: '',
-        sourceIp: '123.123.123.123',
-        accessKey: null,
-        cognitoAuthenticationType: null,
-        cognitoAuthenticationProvider: null,
-        userArn: null,
-        userAgent: 'SomeBrowser/1.2.3',
-        user: null
-      }
-    },
-    body: querystring.stringify(data),
-    isBase64Encoded: false,
-  };
+  let request = cloneDeep(sampleRequest);
+
+  request.path = path;
+  request.httpMethod = method;
+  request.headers['X-API-Key'] = apiKey;
+  request.pathParameters.proxy = path;
+  request.queryStringParameters = query && querystring.parse(query);
+  request.body = querystring.stringify(data);
+  request.requestContext.path = path;
+  request.requestContext.requestId = uuid.v4();
+
+  return request;
 }
 
 /**
- * Creates an object that mimics the AWS API Gateway "context" parameter
+ * Creates an AWS API Gateway context object
  *
- * @param {object} event - The mock "event" parameter
+ * @param {object} apiGatewayRequest - The AWS API Gateway request object
  * @param {function} resolve - The callback to call when the Lambda exits successfully
  * @param {function} reject - The callback to call when the Lambda throws an error
  * @returns {object}
  */
-function createContext (event, resolve, reject) {
-  return {
-    callbackWaitsForEmptyEventLoop: false,
-    done: (err, result) => err ? reject(err) : resolve(result),
-    succeed: resolve,
-    fail: reject,
-    logGroupName: '/aws/lambda/TrendsetterLambda',
-    logStreamName: '2017/10/04/[$LATEST]example87df087a954630c4cf7b8e364',
-    functionName: 'TrendsetterLambda',
-    memoryLimitInMB: '128',
-    functionVersion: '$LATEST',
-    getRemainingTimeInMillis: () => 3000,
-    invokeid: event.requestContext.requestId,
-    awsRequestId: event.requestContext.requestId,
-    invokedFunctionArn: 'arn:aws:lambda:us-east-1:619784300716:function:TrendsetterLambda',
-  };
+function createContext (apiGatewayRequest) {
+  let context = cloneDeep(sampleContext);
+
+  context.invokeid = apiGatewayRequest.requestContext.requestId;
+  context.awsRequestId = apiGatewayRequest.requestContext.requestId;
+
+  return context;
 }
