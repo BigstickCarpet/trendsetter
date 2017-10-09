@@ -64,13 +64,16 @@ function createRequest (method, path, data) {
 
   request.path = path;
   request.httpMethod = method;
-  request.headers['X-API-Key'] = apiKey;
   request.headers.Host = 'localhost';
   request.pathParameters.proxy = path;
   request.queryStringParameters = query && querystring.parse(query);
   request.body = querystring.stringify(data);
   request.requestContext.path = path;
   request.requestContext.requestId = uuid.v4();
+
+  if (typeof apiKey === 'string') {
+    request.headers['X-API-Key'] = apiKey;
+  }
 
   return request;
 }

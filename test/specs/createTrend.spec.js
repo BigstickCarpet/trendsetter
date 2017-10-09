@@ -67,7 +67,7 @@ describe('Create new trends', () => {
       .then(res => {
         let body = assert.isErrorResponse(res, 409);
         body.error.should.equal('CONFLICT');
-        body.message.should.equal('My Little Pony was already trendy in 2014. It can\'t be trendy again until 2025.');
+        body.message.should.equal('My Little Pony was trendy in 2014. It can\'t be trendy again until 2025.');
       });
   });
 
@@ -91,7 +91,7 @@ describe('Create new trends', () => {
       .then(res => {
         let body = assert.isErrorResponse(res, 409);
         body.error.should.equal('CONFLICT');
-        body.message.should.equal('My Little Pony was already trendy in 1983. It can\'t be trendy between 1972 and 1983.');
+        body.message.should.equal('My Little Pony was trendy in 1983. It can\'t be trendy between 1972 and 1983.');
       });
   });
 
