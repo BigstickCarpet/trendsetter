@@ -3,7 +3,11 @@
 const apiGateway = require('../fixtures/apiGateway');
 const assert = require('../fixtures/assert');
 
-describe('Create new trends', () => {
+describe.only('Create new trends', () => {
+
+  // Create a unique User ID for each test, so we know we won't conflict with existing trends
+  let user;
+  beforeEach(() => user = `${Date.now()}`);
 
   it('can create a new trend', () => {
     let newTrend = {
@@ -14,7 +18,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let trend = assert.isSuccessfulResponse(res, 201);
@@ -33,7 +37,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let trend = assert.isSuccessfulResponse(res, 201);
@@ -52,7 +56,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -69,7 +73,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -87,7 +91,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -104,7 +108,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -122,7 +126,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -139,7 +143,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -157,7 +161,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -175,7 +179,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -193,7 +197,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
@@ -211,7 +215,7 @@ describe('Create new trends', () => {
     };
 
     return apiGateway
-      .auth('SomeUser')
+      .auth(user)
       .post('/trends', newTrend)
       .then(res => {
         let body = assert.isErrorResponse(res, 400);
