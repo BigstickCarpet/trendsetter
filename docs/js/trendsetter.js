@@ -76,7 +76,7 @@ $(function () {
       message: req.responseText || req.statusText,
     };
 
-    alert('There was an HTTP ' + err.error + ' Error (' + req.statusText + '):\n\n' + err.message);
+    alert('There was an HTTP ' + err.error + ' Error:\n\n' + err.message);
   }
 
 });
