@@ -91,6 +91,7 @@ function createContext (apiGatewayRequest) {
 
   context.invokeid = apiGatewayRequest.requestContext.requestId;
   context.awsRequestId = apiGatewayRequest.requestContext.requestId;
+  context.getRemainingTimeInMillis = () => 3000;
 
   return context;
 }
