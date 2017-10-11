@@ -71,12 +71,12 @@ $(function () {
   // HTTP error handler
   function errorHandler (req) {
     console.log(req);
-    var err = req.responseJSON || {
-      error: req.status,
-      message: req.responseText || req.statusText,
-    };
+    var error = req.responseJSON || {};
+    var httpStatus = req.status || '';
+    var errorCode = error.error || 'unknown error';
+    var errorMessage = error.message || req.responseText || req.statusText;
 
-    alert('There was an HTTP ' + err.error + ' Error:\n\n' + err.message);
+    alert('There was an HTTP ' + httpStatus + ' Error (' + errorCode + '):\n\n' + errorMessage);
   }
 
 });
