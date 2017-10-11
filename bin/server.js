@@ -9,6 +9,7 @@ const _ = require('lodash');
 const uuid = require('uuid');
 const cors = require('cors');
 const express = require('express');
+const bodyParser = require('body-parser');
 const querystring = require('querystring');
 const trendsetter = require('../lib');
 const sampleRequest = require('../lib/sampleRequest.json');
@@ -22,6 +23,7 @@ website.listen(7070, () => console.log('The Trendsetter website is now running a
 // Serve the Trendsetter API on port 8080
 let api = express();
 api.use(cors());
+api.use(bodyParser.urlencoded({ extended: false }));
 api.use(mockApiGateway);
 api.listen(8080, () => console.log('The Trendsetter API is now running at http://localhost:8080'));
 
