@@ -2,7 +2,7 @@ $(function () {
   'use strict';
 
   // Use the public API, unless we're running on localhost
-  var apiHost = 'https://api.trendsetter.bigstickcarpet.com';
+  var apiHost = 'https://api.trendsetter.jamesmessinger.com';
   if (location.hostname === 'localhost') {
     apiHost = 'http://localhost:8080';
   }

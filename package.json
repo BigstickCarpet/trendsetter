@@ -10,13 +10,13 @@
   ],
   "author": {
     "name": "James Messinger",
-    "url": "http://bigstickcarpet.com"
+    "url": "https://jamesmessinger.com"
   },
   "license": "MIT",
-  "homepage": "http://trendsetter.bigstickcarpet.com",
+  "homepage": "https://trendsetter.jamesmessinger.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/BigstickCarpet/trendsetter.git"
+    "url": "https://github.com/James-Messinger/trendsetter.git"
   },
   "main": "lib/index.js",
   "bin": "bin/server.js",
