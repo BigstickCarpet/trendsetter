@@ -4,7 +4,7 @@ TrendSetter
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/james-messinger/trendsetter?svg=true&branch=master&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/BigstickCarpet/trendsetter/branch/master)
 [![Dependencies](https://david-dm.org/James-Messinger/trendsetter.svg)](https://david-dm.org/James-Messinger/trendsetter)
 
-[![Coverage Status](https://coveralls.io/repos/BigstickCarpet/trendsetter/badge.svg?branch=master&service=github)](https://coveralls.io/r/BigstickCarpet/trendsetter)
+[![Coverage Status](https://coveralls.io/repos/github/James-Messinger/trendsetter/badge.svg?branch=master)](https://coveralls.io/github/James-Messinger/trendsetter)
 [![Codacy Score](https://api.codacy.com/project/badge/Grade/e767d2f849f94df08c11ea1d85b801d9)](https://www.codacy.com/public/jamesmessinger/trendsetter)
 [![Inline docs](http://inch-ci.org/github/James-Messinger/trendsetter.svg?branch=master&style=shields)](http://inch-ci.org/github/James-Messinger/trendsetter)
 
