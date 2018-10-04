@@ -16,7 +16,7 @@
   "homepage": "https://trendsetter.jamesmessinger.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/James-Messinger/trendsetter.git"
+    "url": "https://github.com/JamesMessinger/trendsetter.git"
   },
   "main": "lib/index.js",
   "bin": "bin/server.js",
