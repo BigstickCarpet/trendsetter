@@ -24,7 +24,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "eslint bin lib test docs/js/trendsetter.js --fix",
+    "lint": "eslint bin lib test docs/js/trendsetter.js",
     "test": "mocha",
     "cover": "istanbul cover _mocha",
     "start": "node bin/server.js",
