@@ -12,7 +12,7 @@ os:
   - linux
   - osx
 
-  # FIXME: Travis-CI does not currently support environment variables on Windows (i.e. AWS_SECRET_ACCESS_KEY)
+  # FIXME: Travis-CI does not currently support secrets on Windows (i.e. AWS_SECRET_ACCESS_KEY)
   # https://github.com/travis-ci/travis-build/pull/1544
   # - windows
 
