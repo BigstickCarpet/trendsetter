@@ -3,7 +3,8 @@ Trendsetter
 
 [![Build Status](https://api.travis-ci.com/JamesMessinger/trendsetter.svg?branch=master)](https://travis-ci.com/JamesMessinger/trendsetter)
 [![Windows Build Status](https://ci.appveyor.com/api/projects/status/github/JamesMessinger/trendsetter?svg=true&branch=master&failingText=Windows%20build%20failing&passingText=Windows%20build%20passing)](https://ci.appveyor.com/project/JamesMessinger/trendsetter/branch/master)
-[![Inline docs](https://inch-ci.org/github/JamesMessinger/trendsetter.svg?branch=master&style=shields)](https://inch-ci.org/github/JamesMessinger/trendsetter)
+[![Coverage Status](https://coveralls.io/repos/github/JamesMessinger/trendsetter/badge.svg?branch=master)](https://coveralls.io/github/JamesMessinger/trendsetter)
+
 
 Trendsetter is a simple REST API and website that I use for demos and [training](https://github.com/JamesMessinger/super-powered-api-testing/tree/v1#super-powered-api-testing). It demonstrates various aspects of web development, API development, and testing.
 
