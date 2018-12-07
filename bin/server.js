@@ -1,31 +1,31 @@
 #!/usr/bin/env node
-'use strict';
+"use strict";
 
 // NOTE: These environment variables must be set BEFORE importing modules
-process.env.AWS_REGION = 'us-east-1';
-process.env.TRENDSETTER_TABLE_NAME = 'Trendsetter.Trends';
+process.env.AWS_REGION = "us-east-1";
+process.env.TRENDSETTER_TABLE_NAME = "Trendsetter.Trends";
 
-const _ = require('lodash');
-const uuid = require('uuid');
-const cors = require('cors');
-const express = require('express');
-const bodyParser = require('body-parser');
-const querystring = require('querystring');
-const trendsetter = require('../lib');
-const sampleRequest = require('../lib/sampleRequest.json');
-const sampleContext = require('../lib/sampleContext.json');
+const _ = require("lodash");
+const uuid = require("uuid");
+const cors = require("cors");
+const express = require("express");
+const bodyParser = require("body-parser");
+const querystring = require("querystring");
+const trendsetter = require("../lib");
+const sampleRequest = require("../lib/sampleRequest.json");
+const sampleContext = require("../lib/sampleContext.json");
 
 // Serve the Trendsetter website on port 7070
 let website = express();
-website.use(express.static('./docs'));
-website.listen(7070, () => console.log('The Trendsetter website is now running at http://localhost:7070'));
+website.use(express.static("./docs"));
+website.listen(7070, () => console.log("The Trendsetter website is now running at http://localhost:7070"));
 
 // Serve the Trendsetter API on port 8080
 let api = express();
 api.use(cors());
 api.use(bodyParser.urlencoded({ extended: false }));
 api.use(mockApiGateway);
-api.listen(8080, () => console.log('The Trendsetter API is now running at http://localhost:8080'));
+api.listen(8080, () => console.log("The Trendsetter API is now running at http://localhost:8080"));
 
 /**
  * This function is Express middleware that mimics AWS API Gateway.
@@ -56,25 +56,25 @@ function mockApiGateway (req, res) {
     // API Gateway always sets these headers, regardless of success or error
     res.set({
       Via: apiGatewayRequest.headers.Via,
-      'X-Amz-Cf-Id': apiGatewayRequest.headers['X-Amz-Cf-Id'],
-      'x-amzn-RequestId': apiGatewayContext.awsRequestId,
+      "X-Amz-Cf-Id": apiGatewayRequest.headers["X-Amz-Cf-Id"],
+      "x-amzn-RequestId": apiGatewayContext.awsRequestId,
     });
 
     if (error) {
       console.error(error);
       res
-        .set('X-Cache', 'Error from cloudfront')
+        .set("X-Cache", "Error from cloudfront")
         .status(502)
-        .send({ message: 'Internal server error' });
+        .send({ message: "Internal server error" });
     }
     else {
       res
         .set(Object.assign({
-          'X-Cache': 'Miss from cloudfront',
-          'X-Amzn-Trace-Id': 'sampled=0;' + apiGatewayRequest.headers['X-Amzn-Trace-Id'],
+          "X-Cache": "Miss from cloudfront",
+          "X-Amzn-Trace-Id": "sampled=0;" + apiGatewayRequest.headers["X-Amzn-Trace-Id"],
         }, apiGatewayResponse.headers))
         .status(apiGatewayResponse.statusCode || 200)
-        .send(apiGatewayResponse.body || '');
+        .send(apiGatewayResponse.body || "");
     }
   }
 }
@@ -95,12 +95,12 @@ function createRequest (httpRequest) {
   apiGatewayRequest.body = querystring.stringify(httpRequest.body);
   apiGatewayRequest.requestContext.path = httpRequest.path;
   apiGatewayRequest.requestContext.requestId = uuid.v4();
-  apiGatewayRequest.requestContext.identity.userAgent = httpRequest.get('User-Agent');
+  apiGatewayRequest.requestContext.identity.userAgent = httpRequest.get("User-Agent");
 
   Object.assign(apiGatewayRequest.headers, httpRequest.headers);
 
   if (httpRequest.ip) {
-    apiGatewayRequest.headers['X-Forwarded-For'] = httpRequest.ip;
+    apiGatewayRequest.headers["X-Forwarded-For"] = httpRequest.ip;
     apiGatewayRequest.requestContext.identity.sourceIp = httpRequest.ip;
   }
 

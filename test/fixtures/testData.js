@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const trendStore = require('../../lib/trendStore');
-const sampleTrends = require('../../lib/sampleTrends.json');
+const trendStore = require("../../lib/trendStore");
+const sampleTrends = require("../../lib/sampleTrends.json");
 
 module.exports = {
   /**
