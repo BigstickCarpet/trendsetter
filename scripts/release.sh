@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ==================================================================================================
 # This script does a full release of the Trendsetter API and website to production.
-# It runs lintersand tests first, then deploys the latest code, bumps the version number in
+# It runs linters and tests first, then deploys the latest code, bumps the version number in
 # AWS Lambda, package.json, and Git, and updates the "Prod" alias.
 # ==================================================================================================
 
