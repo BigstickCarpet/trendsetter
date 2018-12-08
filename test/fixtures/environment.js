@@ -29,6 +29,3 @@ function setEnv (name, value) {
     process.env[name] = value;
   }
 }
-
-
-console.log("SUPER_SECRET =", process.env.SUPER_SECRET);
